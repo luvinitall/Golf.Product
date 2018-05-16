@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2000
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Golf.Product", "Golf.Product\Golf.Product.csproj", "{2AA8E48A-9EDF-4908-902F-7F589C901A53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Golf.Product.Tests", "Golf.Product.Tests\Golf.Product.Tests.csproj", "{90039CF9-6ECA-4404-9E38-0895BB363714}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2AA8E48A-9EDF-4908-902F-7F589C901A53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AA8E48A-9EDF-4908-902F-7F589C901A53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AA8E48A-9EDF-4908-902F-7F589C901A53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AA8E48A-9EDF-4908-902F-7F589C901A53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90039CF9-6ECA-4404-9E38-0895BB363714}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90039CF9-6ECA-4404-9E38-0895BB363714}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90039CF9-6ECA-4404-9E38-0895BB363714}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90039CF9-6ECA-4404-9E38-0895BB363714}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8C60714D-71EC-4386-A1D3-9D05D0C94A97}
+	EndGlobalSection
+EndGlobal
