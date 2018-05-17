@@ -35,6 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework">
       <HintPath>..\packages\MSTest.TestFramework.1.2.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
@@ -60,12 +66,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Golf.Product\Golf.Product.csproj">
-      <Project>{2AA8E48A-9EDF-4908-902F-7F589C901A53}</Project>
-      <Name>Golf.Product</Name>
+    <ProjectReference Include="..\Golf.Product.DataAccessLayer\Golf.Product.DataAccessLayer.csproj">
+      <Project>{4ec8ad50-1a19-4fe9-85b8-5783a045c0e9}</Project>
+      <Name>Golf.Product.DataAccessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Golf.Product.Model\Golf.Product.Model.csproj">
+      <Project>{ed062c68-5828-4260-996e-05339fff0892}</Project>
+      <Name>Golf.Product.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

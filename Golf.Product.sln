@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Golf.Product", "Golf.Produc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Golf.Product.Tests", "Golf.Product.Tests\Golf.Product.Tests.csproj", "{90039CF9-6ECA-4404-9E38-0895BB363714}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Golf.Product.DataAccessLayer", "Golf.Product.DataAccessLayer\Golf.Product.DataAccessLayer.csproj", "{4EC8AD50-1A19-4FE9-85B8-5783A045C0E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Golf.Product.Model", "Golf.Product.Model\Golf.Product.Model.csproj", "{ED062C68-5828-4260-996E-05339FFF0892}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{90039CF9-6ECA-4404-9E38-0895BB363714}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90039CF9-6ECA-4404-9E38-0895BB363714}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90039CF9-6ECA-4404-9E38-0895BB363714}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EC8AD50-1A19-4FE9-85B8-5783A045C0E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EC8AD50-1A19-4FE9-85B8-5783A045C0E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EC8AD50-1A19-4FE9-85B8-5783A045C0E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EC8AD50-1A19-4FE9-85B8-5783A045C0E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED062C68-5828-4260-996E-05339FFF0892}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED062C68-5828-4260-996E-05339FFF0892}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED062C68-5828-4260-996E-05339FFF0892}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED062C68-5828-4260-996E-05339FFF0892}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

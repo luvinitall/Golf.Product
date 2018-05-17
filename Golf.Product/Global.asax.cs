@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Routing;
+using Golf.Product.DataAccessLayer;
 
 namespace Golf.Product
 {
@@ -11,7 +12,9 @@ namespace Golf.Product
     {
         protected void Application_Start()
         {
+            
             GlobalConfiguration.Configure(WebApiConfig.Register);
+ 
         }
     }
 }
