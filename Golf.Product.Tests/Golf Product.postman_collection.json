@@ -80,6 +80,48 @@
 				"description": "Get Families, metadata = full"
 			},
 			"response": []
+		},
+		{
+			"name": "Get Categories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Categories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Products"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
