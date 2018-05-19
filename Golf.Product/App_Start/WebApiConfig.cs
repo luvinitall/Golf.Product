@@ -27,7 +27,7 @@ namespace Golf.Product
             builder.ContainerName = "Golf.ProductContainer";
             builder.EntitySet<Category>("Categories");
             builder.EntitySet<Family>("Families");
-
+            builder.EntitySet<Model.Product>("Products");
             return builder.GetEdmModel();
         }
     }
