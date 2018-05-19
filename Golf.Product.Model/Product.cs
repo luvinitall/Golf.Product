@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices;
 
 namespace Golf.Product.Model
 {
@@ -14,5 +15,9 @@ namespace Golf.Product.Model
         public string Description { get; set; }
 
         public virtual Family Family { get; set; }
+
+        public Gender Gender { get; set; }
+
+        public Hand Hand { get; set; }
     }
 }

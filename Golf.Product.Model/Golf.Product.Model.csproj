@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Category.cs" />
     <Compile Include="Family.cs" />
+    <Compile Include="Gender.cs" />
+    <Compile Include="Hand.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
