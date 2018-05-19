@@ -14,21 +14,22 @@ namespace Golf.Product.Controllers
     {
         GolfProductDbContext _ctx = new GolfProductDbContext();
 
-
+        [EnableQuery]
         public IHttpActionResult Get()
         {
             return Ok(_ctx.Categories);
 
         }
 
+        [EnableQuery]
         public IHttpActionResult Get([FromODataUri] int key)
         {
-            var category = _ctx.Categories.FirstOrDefault(c => c.CategoryId == key);
+            var category = _ctx.Categories.Where(c => c.CategoryId == key);
 
-            if (category == null)
+            if (!category.Any())
                 return NotFound();
 
-            return Ok(category);
+            return Ok(SingleResult.Create(category));
         }
 
         [HttpGet]
@@ -56,21 +57,18 @@ namespace Golf.Product.Controllers
 
         [HttpGet]
         [ODataRoute("Categories({key})/Families")]
+        [EnableQuery]
         public IHttpActionResult GetCategoryCollectionProperty([FromODataUri] int key)
         {
-            var propertyToGet = Url.Request.RequestUri.Segments.Last();
+            var category = _ctx.Categories.Where(c => c.CategoryId == key);
 
-            var category = _ctx.Categories.Include(propertyToGet).FirstOrDefault(c => c.CategoryId == key);
-
-            if (category == null)
+            if (!category.Any())
                 return NotFound();
 
 
-            var propertyValue = category.GetValue(propertyToGet);
+            return Ok(_ctx.Families.Where(f=>f.Category.CategoryId == key));
 
-
-
-            return this.CreateOKHttpActionResult(propertyValue);
+           
         }
 
         [HttpGet]

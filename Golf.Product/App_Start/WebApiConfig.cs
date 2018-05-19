@@ -27,8 +27,8 @@ namespace Golf.Product
             builder.Namespace = "Golf.Product";
             builder.ContainerName = "Golf.ProductContainer";
             builder.EntitySet<Category>("Categories").EntityType.Select(SelectExpandType.Allowed);
-            builder.EntitySet<Family>("Families");
-            builder.EntitySet<Model.Product>("Products");
+            builder.EntitySet<Family>("Families").EntityType.Select(SelectExpandType.Allowed);
+            builder.EntitySet<Model.Product>("Products").EntityType.Select(SelectExpandType.Allowed);
             return builder.GetEdmModel();
         }
     }
