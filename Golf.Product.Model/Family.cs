@@ -12,6 +12,8 @@ namespace Golf.Product.Model
         [Required]
         public string Description { get; set; }
 
+        public int SortOrder { get; set; }
+
         public ICollection<Product> Products { get; set; }
 
         public virtual Category Category { get; set; }
