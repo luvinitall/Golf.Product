@@ -6,6 +6,186 @@
 	},
 	"item": [
 		{
+			"name": "Get Categories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Categories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Category (Description)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Categories(2)/Description",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Categories(2)",
+						"Description"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Empty Category",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Categories(3)",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Categories(3)"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Category With Reference",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Categories(2)",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Categories(2)"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put Category",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \r\n    \"Description\": \"New Category\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:61877/odata/Categories(3)",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Categories(3)"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch Category",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \r\n    \"Description\": \"Patch Category\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:61877/odata/Categories(3)",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Categories(3)"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Category",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\t\t\"@odata.type\":\"Golf.Product.Model.Category\",\n            \"Description\": \"New Category Again\"\n        }"
+				},
+				"url": {
+					"raw": "http://localhost:61877/odata/Categories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get Families Minimal",
 			"request": {
 				"method": "GET",
@@ -78,27 +258,6 @@
 					]
 				},
 				"description": "Get Families, metadata = full"
-			},
-			"response": []
-		},
-		{
-			"name": "Get Categories",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "http://localhost:61877/odata/Categories",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "61877",
-					"path": [
-						"odata",
-						"Categories"
-					]
-				}
 			},
 			"response": []
 		},

@@ -54,7 +54,7 @@ namespace Golf.Product.Controllers
 
         [HttpGet]
         [ODataRoute("Categories({key})/Families")]
-        public IHttpActionResult GetPersonCollectionProperty([FromODataUri] int key)
+        public IHttpActionResult GetCategoryCollectionProperty([FromODataUri] int key)
         {
             var propertyToGet = Url.Request.RequestUri.Segments.Last();
 
@@ -73,7 +73,7 @@ namespace Golf.Product.Controllers
 
         [HttpGet]
         [ODataRoute("Categories({key})/Description/$value")]
-        public IHttpActionResult GetPersonPropertyRawValue([FromODataUri] int key)
+        public IHttpActionResult GetCategoryPropertyRawValue([FromODataUri] int key)
         {
             var category = _ctx.Categories.FirstOrDefault(c => c.CategoryId == key);
 
@@ -152,7 +152,7 @@ namespace Golf.Product.Controllers
 
             //Can not delete if the category is linked to any families;
             if (currentCategory.Families.Any())
-                return StatusCode(HttpStatusCode.Conflict);
+                return Content(HttpStatusCode.Conflict,"This category is being referenced by other families.");
 
             _ctx.Categories.Remove(currentCategory);
             _ctx.SaveChanges();
