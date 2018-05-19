@@ -14,9 +14,10 @@ namespace Golf.Product.Controllers
     {
         GolfProductDbContext _ctx = new GolfProductDbContext();
 
+
         public IHttpActionResult Get()
         {
-            return Ok(_ctx.Categories.Include("Families"));
+            return Ok(_ctx.Categories);
 
         }
 

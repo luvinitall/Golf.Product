@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Http;
 using System.Web.OData.Builder;
 using System.Web.OData.Extensions;
+using System.Web.OData.Query;
 using Golf.Product.Model;
 using Microsoft.OData.Edm;
 
@@ -25,7 +26,7 @@ namespace Golf.Product
             var builder = new ODataConventionModelBuilder();
             builder.Namespace = "Golf.Product";
             builder.ContainerName = "Golf.ProductContainer";
-            builder.EntitySet<Category>("Categories");
+            builder.EntitySet<Category>("Categories").EntityType.Select(SelectExpandType.Allowed);
             builder.EntitySet<Family>("Families");
             builder.EntitySet<Model.Product>("Products");
             return builder.GetEdmModel();
