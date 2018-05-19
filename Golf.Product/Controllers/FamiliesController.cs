@@ -18,6 +18,16 @@ namespace Golf.Product.Controllers
 
         }
 
+        public IHttpActionResult Get([FromODataUri] int key)
+        {
+            var family = _ctx.Families.FirstOrDefault(f => f.FamilyId == key);
+
+            if (family == null)
+                return NotFound();
+
+            return Ok(family);
+        }
+
         protected override void Dispose(bool disposing)
         {
             _ctx?.Dispose();

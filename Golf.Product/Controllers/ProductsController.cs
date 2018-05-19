@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Linq;
+using System.Web.Http;
 using System.Web.OData;
 using Golf.Product.DataAccessLayer;
 
@@ -12,6 +13,16 @@ namespace Golf.Product.Controllers
         {
             return Ok(_ctx.Products);
 
+        }
+
+        public IHttpActionResult Get([FromODataUri] int key)
+        {
+            var product = _ctx.Products.FirstOrDefault(p => p.ProductId == key);
+
+            if (product == null)
+                return NotFound();
+
+            return Ok(product);
         }
 
         protected override void Dispose(bool disposing)

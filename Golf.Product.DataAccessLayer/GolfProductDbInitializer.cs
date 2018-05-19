@@ -28,8 +28,12 @@ namespace Golf.Product.DataAccessLayer
                 Description = "Irons"
             };
 
-           
-            
+            var emptyCategory = new Category()
+            {
+                CategoryId = categoryId++,
+                Description = "Empty"
+            };
+
 
 
             var familyEpicDriver = new Family()
@@ -155,6 +159,7 @@ namespace Golf.Product.DataAccessLayer
 
             context.Categories.Add(categoryWoods);
             context.Categories.Add(categoryIrons);
+            context.Categories.Add(emptyCategory);
 
             context.Families.Add(familyEpicDriver);
             context.Families.Add(familyRogueDriver);
