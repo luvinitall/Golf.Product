@@ -1,0 +1,85 @@
+{
+	"info": {
+		"_postman_id": "35b57238-7252-4a70-b79f-89f4f3a9a8cb",
+		"name": "Golf Product",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Families Minimal",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Families",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Families"
+					]
+				},
+				"description": "Get Families"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Families None",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json;odata.metadata=none"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Families",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Families"
+					]
+				},
+				"description": "Get Families odata.metadata = none"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Families Full",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json;odata.metadata=full"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Families",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Families"
+					]
+				},
+				"description": "Get Families, metadata = full"
+			},
+			"response": []
+		}
+	]
+}
