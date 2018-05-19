@@ -63,6 +63,14 @@ namespace Golf.Product.DataAccessLayer
                 Description = "Rogue Irons",
                 Category = categoryIrons
             };
+            
+            var familyIronNoProducts = new Family()
+            {
+                FamilyId = familyId++,
+                Description = "Empty Family",
+                Category = categoryIrons
+            };
+
             familyRogueIron.Products = new List<Model.Product>();
             var productRogueIron3 =
                 new Model.Product() {Description = "Rogue 3 Iron", Family = familyRogueIron, Sku = "Rogue3Iron", Gender = Gender.Male, Hand = Hand.Right};
@@ -153,8 +161,9 @@ namespace Golf.Product.DataAccessLayer
             familyRogueIron.Products.Add(productRogueIron5LHF);
             familyRogueIron.Products.Add(productRogueIron7LHF);
             familyRogueIron.Products.Add(productRogueIron9LHF);
+            
 
-            categoryIrons.Families = new List<Family>(){familyRogueIron, familyEpicIron};
+            categoryIrons.Families = new List<Family>(){familyRogueIron, familyEpicIron ,familyIronNoProducts};
             categoryWoods.Families = new List<Family>() { familyEpicDriver, familyRogueDriver };
 
             context.Categories.Add(categoryWoods);
@@ -165,6 +174,7 @@ namespace Golf.Product.DataAccessLayer
             context.Families.Add(familyRogueDriver);
             context.Families.Add(familyEpicIron);
             context.Families.Add(familyRogueIron);
+            context.Families.Add(familyIronNoProducts);
 
             context.Products.Add(productRogueIron3);
             context.Products.Add(productRogueIron4);
