@@ -4,7 +4,7 @@ using Golf.Product.DataAccessLayer;
 
 namespace Golf.Product.Controllers
 {
-    public class ProductController : ODataController
+    public class ProductsController : ODataController
     {
         GolfProductDbContext _ctx = new GolfProductDbContext();
 
