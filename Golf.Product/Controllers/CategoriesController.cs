@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.OData;
@@ -15,7 +16,7 @@ namespace Golf.Product.Controllers
 
         public IHttpActionResult Get()
         {
-            return Ok(_ctx.Categories);
+            return Ok(_ctx.Categories.Include("Families"));
 
         }
 
@@ -157,6 +158,90 @@ namespace Golf.Product.Controllers
             _ctx.Categories.Remove(currentCategory);
             _ctx.SaveChanges();
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpPost]
+        [ODataRoute("Categories({key})/Families/$ref")]
+        public IHttpActionResult CreateLinkToFamily([FromODataUri] int key, [FromBody] Uri link)
+        {
+            var currentCategory = _ctx.Categories.Include("Families").FirstOrDefault(c => c.CategoryId == key);
+            if (currentCategory == null)
+                return NotFound();
+
+            int keyOfFamilyToAdd = Request.GetKeyValue<int>(link);
+
+            if (currentCategory.Families.Any(i => i.FamilyId == keyOfFamilyToAdd))
+                return BadRequest($"The family with id {keyOfFamilyToAdd} is already linked to this category");
+
+
+            var familyLinkToAdd = _ctx.Families.Include("Category").FirstOrDefault(f => f.FamilyId == keyOfFamilyToAdd);
+
+            if (familyLinkToAdd == null)
+                return NotFound();
+
+ currentCategory.Families.Add(familyLinkToAdd);
+            familyLinkToAdd.Category = currentCategory;
+            _ctx.SaveChanges();
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpPut]
+        [ODataRoute("Categories({key})/Families({relatedKey})/$ref")]
+        public IHttpActionResult UpdateLinkToFamily([FromODataUri] int key, [FromODataUri] int relatedKey, [FromBody] Uri link)
+        {
+            var currentCategory = _ctx.Categories.Include("Families").FirstOrDefault(c => c.CategoryId == key);
+            if (currentCategory == null)
+                return NotFound();
+
+            var familyToRemove = currentCategory.Families.FirstOrDefault(f => f.FamilyId == relatedKey);
+
+            if (familyToRemove == null)
+                return NotFound();
+
+            int keyOfFamilyToAdd = Request.GetKeyValue<int>(link);
+
+            if (currentCategory.Families.Any(i => i.FamilyId == keyOfFamilyToAdd))
+                return BadRequest($"The family with id {keyOfFamilyToAdd} is already linked to this category");
+
+
+            var familyLinkToAdd = _ctx.Families.Include("Category").FirstOrDefault(f => f.FamilyId == keyOfFamilyToAdd);
+
+            if (familyLinkToAdd == null)
+                return NotFound();
+
+
+            currentCategory.Families.Remove(familyToRemove);
+            _ctx.Families.Remove(familyToRemove);
+
+
+            currentCategory.Families.Add(familyLinkToAdd);
+            familyLinkToAdd.Category = currentCategory;
+            _ctx.SaveChanges();
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpDelete]
+        [ODataRoute("Categories({key})/Families({relatedKey})/$ref")]
+        public IHttpActionResult DeleteLinkToFamily([FromODataUri] int key, [FromODataUri] int relatedKey)
+        {
+            var currentCategory = _ctx.Categories.Include("Families").FirstOrDefault(c => c.CategoryId == key);
+            if (currentCategory == null)
+                return NotFound();
+
+            var familyToRemove = currentCategory.Families.FirstOrDefault(f => f.FamilyId == relatedKey);
+
+            if (familyToRemove == null)
+                return NotFound();
+
+            familyToRemove.Category = null;
+            currentCategory.Families.Remove(familyToRemove);
+            _ctx.Families.Remove(familyToRemove);
+
+            _ctx.SaveChanges();
+            return StatusCode(HttpStatusCode.NoContent);
+
         }
 
         protected override void Dispose(bool disposing)

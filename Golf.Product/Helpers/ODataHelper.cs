@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Hosting;
 using System.Web.Http.Routing;
 using System.Web.OData;
 using System.Web.OData.Extensions;
@@ -82,6 +83,8 @@ namespace Golf.Product.Helpers
                 new HttpRouteValueDictionary(route.Constraints),
                 new HttpRouteValueDictionary(route.DataTokens),
                 route.Handler);
+
+            newRequest.Properties.Add(HttpPropertyKeys.HttpConfigurationKey, request.Properties[HttpPropertyKeys.HttpConfigurationKey]);
 
             var routeData = newRoute.GetRouteData(request.GetConfiguration().VirtualPathRoot, newRequest);
             if (routeData == null)

@@ -49,6 +49,79 @@
 			"response": []
 		},
 		{
+			"name": "Get Category (Description) Raw",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Categories(2)/Description/$value",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Categories(2)",
+						"Description",
+						"$value"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Category By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Categories(3)",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Categories(3)"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Category",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\t\t\"@odata.type\":\"Golf.Product.Model.Category\",\n            \"Description\": \"New Category Again\"\n        }"
+				},
+				"url": {
+					"raw": "http://localhost:61877/odata/Categories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Delete Empty Category",
 			"request": {
 				"method": "DELETE",
@@ -157,21 +230,25 @@
 			"response": []
 		},
 		{
-			"name": "Post Category",
+			"name": "Post Category Association",
 			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
 						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\t\t\"@odata.type\":\"Golf.Product.Model.Category\",\n            \"Description\": \"New Category Again\"\n        }"
+					"raw": "{\n\t\"@odata.id\":\"http://localhost:61877/odata/Families(5)\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:61877/odata/Categories",
+					"raw": "http://localhost:61877/odata/Categories(3)/Families/$ref",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -179,7 +256,85 @@
 					"port": "61877",
 					"path": [
 						"odata",
-						"Categories"
+						"Categories(3)",
+						"Families",
+						"$ref"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put Category Association",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"@odata.id\":\"http://localhost:61877/odata/Families(2)\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:61877/odata/Categories(3)/Families(5)/$ref",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Categories(3)",
+						"Families(5)",
+						"$ref"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Category Association",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:61877/odata/Categories(2)/Families/$ref?$id=http://localhost:61877/odata/Families(5)",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Categories(2)",
+						"Families",
+						"$ref"
+					],
+					"query": [
+						{
+							"key": "$id",
+							"value": "http://localhost:61877/odata/Families(5)"
+						}
 					]
 				}
 			},
@@ -258,6 +413,155 @@
 					]
 				},
 				"description": "Get Families, metadata = full"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Family (Description)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Families(2)/Description",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Families(2)",
+						"Description"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Family (Description) Raw",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Families(2)/Description/$value",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Families(2)",
+						"Description",
+						"$value"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Empty Family",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Families(5)",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Families(5)"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Family With Referrence",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Families(4)",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Families(4)"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put Family",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \r\n    \"Description\": \"Changed Family\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:61877/odata/Families(3)",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Families(3)"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Family",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\t\t\"@odata.type\":\"Golf.Product.Model.Family\",\n            \"Description\": \"New Family\"\n        }"
+				},
+				"url": {
+					"raw": "http://localhost:61877/odata/Families",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Families"
+					]
+				}
 			},
 			"response": []
 		},
