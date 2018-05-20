@@ -19,6 +19,8 @@ namespace Golf.Product
 
             // Web API routes
             config.MapODataServiceRoute("ODataRoute", "odata", GetEdmModel());
+            //config.EnsureInitialized();
+            config.Select().Expand().Filter().OrderBy().MaxTop(10000).Count();
         }
 
         private static IEdmModel GetEdmModel()
@@ -26,9 +28,9 @@ namespace Golf.Product
             var builder = new ODataConventionModelBuilder();
             builder.Namespace = "Golf.Product";
             builder.ContainerName = "Golf.ProductContainer";
-            builder.EntitySet<Category>("Categories").EntityType.Select(SelectExpandType.Allowed);
-            builder.EntitySet<Family>("Families").EntityType.Select(SelectExpandType.Allowed);
-            builder.EntitySet<Model.Product>("Products").EntityType.Select(SelectExpandType.Allowed);
+            builder.EntitySet<Category>("Categories");
+            builder.EntitySet<Family>("Families");
+            builder.EntitySet<Model.Product>("Products");
             return builder.GetEdmModel();
         }
     }
