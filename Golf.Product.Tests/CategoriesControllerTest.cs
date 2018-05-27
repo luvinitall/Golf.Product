@@ -32,6 +32,19 @@ namespace Golf.Product.Tests
     public class CategoriesControllerTest
     {
 
+        private static Mock<DbSet<Category>> GetMockDbSet(IQueryable<Category> data)
+        {
+            //Setup requried for DBSet
+            var mockSet = new Mock<DbSet<Category>>();
+            mockSet.As<IQueryable<Category>>().Setup(m => m.Provider).Returns(data.Provider);
+            mockSet.As<IQueryable<Category>>().Setup(m => m.Expression).Returns(data.Expression);
+            mockSet.As<IQueryable<Category>>().Setup(m => m.ElementType).Returns(data.ElementType);
+            mockSet.As<IQueryable<Category>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator);
+
+            return mockSet;
+        }
+
+
         [TestMethod]
         public void GetAllCategoriesReturnsData_AndHttpOK()
         {
@@ -50,17 +63,9 @@ namespace Golf.Product.Tests
                 new Category()
                     {Description = categoryDescription3}
             }.AsQueryable();
-    
 
-            //Setup requried for DBSet
-            var mockSet = new Mock<DbSet<Category>>();
-            mockSet.As<IQueryable<Category>>().Setup(m => m.Provider).Returns(data.Provider);
-            mockSet.As<IQueryable<Category>>().Setup(m => m.Expression).Returns(data.Expression);
-            mockSet.As<IQueryable<Category>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mockSet.As<IQueryable<Category>>().Setup(m => m.GetEnumerator()).Returns(() => data.GetEnumerator());
- 
             var mockContext = new Mock<GolfProductDbContext>();
-            mockContext.Setup(m => m.Categories).Returns(mockSet.Object);
+            mockContext.Setup(m => m.Categories).Returns(GetMockDbSet(data).Object);
 
             var controller = new CategoriesController(mockContext.Object);
 
@@ -91,15 +96,8 @@ namespace Golf.Product.Tests
             }.AsQueryable();
 
 
-            //Setup requried for DBSet
-            var mockSet = new Mock<DbSet<Category>>();
-            mockSet.As<IQueryable<Category>>().Setup(m => m.Provider).Returns(data.Provider);
-            mockSet.As<IQueryable<Category>>().Setup(m => m.Expression).Returns(data.Expression);
-            mockSet.As<IQueryable<Category>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mockSet.As<IQueryable<Category>>().Setup(m => m.GetEnumerator()).Returns(() => data.GetEnumerator());
-
             var mockContext = new Mock<GolfProductDbContext>();
-            mockContext.Setup(m => m.Categories).Returns(mockSet.Object);
+            mockContext.Setup(m => m.Categories).Returns(GetMockDbSet(data).Object);
 
             var controller = new CategoriesController(mockContext.Object);
 
@@ -131,15 +129,8 @@ namespace Golf.Product.Tests
             }.AsQueryable();
 
 
-            //Setup requried for DBSet
-            var mockSet = new Mock<DbSet<Category>>();
-            mockSet.As<IQueryable<Category>>().Setup(m => m.Provider).Returns(data.Provider);
-            mockSet.As<IQueryable<Category>>().Setup(m => m.Expression).Returns(data.Expression);
-            mockSet.As<IQueryable<Category>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mockSet.As<IQueryable<Category>>().Setup(m => m.GetEnumerator()).Returns(() => data.GetEnumerator());
-
             var mockContext = new Mock<GolfProductDbContext>();
-            mockContext.Setup(m => m.Categories).Returns(mockSet.Object);
+            mockContext.Setup(m => m.Categories).Returns(GetMockDbSet(data).Object);
 
             var controller = new CategoriesController(mockContext.Object);
 
@@ -175,15 +166,8 @@ namespace Golf.Product.Tests
             }.AsQueryable();
 
 
-            //Setup requried for DBSet
-            var mockSet = new Mock<DbSet<Category>>();
-            mockSet.As<IQueryable<Category>>().Setup(m => m.Provider).Returns(data.Provider);
-            mockSet.As<IQueryable<Category>>().Setup(m => m.Expression).Returns(data.Expression);
-            mockSet.As<IQueryable<Category>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mockSet.As<IQueryable<Category>>().Setup(m => m.GetEnumerator()).Returns(() => data.GetEnumerator());
-
             var mockContext = new Mock<GolfProductDbContext>();
-            mockContext.Setup(m => m.Categories).Returns(mockSet.Object);
+            mockContext.Setup(m => m.Categories).Returns(GetMockDbSet(data).Object);
 
             var controller = new CategoriesController(mockContext.Object);
 
@@ -219,15 +203,8 @@ namespace Golf.Product.Tests
             }.AsQueryable();
 
 
-            //Setup requried for DBSet
-            var mockSet = new Mock<DbSet<Category>>();
-            mockSet.As<IQueryable<Category>>().Setup(m => m.Provider).Returns(data.Provider);
-            mockSet.As<IQueryable<Category>>().Setup(m => m.Expression).Returns(data.Expression);
-            mockSet.As<IQueryable<Category>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mockSet.As<IQueryable<Category>>().Setup(m => m.GetEnumerator()).Returns(() => data.GetEnumerator());
-
             var mockContext = new Mock<GolfProductDbContext>();
-            mockContext.Setup(m => m.Categories).Returns(mockSet.Object);
+            mockContext.Setup(m => m.Categories).Returns(GetMockDbSet(data).Object);
 
             var controller = new CategoriesController(mockContext.Object);
 
@@ -282,6 +259,8 @@ namespace Golf.Product.Tests
 
         }
 
+
+      
 
 
     }
