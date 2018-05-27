@@ -36,7 +36,7 @@ namespace Golf.Product.Controllers
         [ODataRoute("Families({key})/Description")]
         public IHttpActionResult GetFamilyProperty([FromODataUri] int key)
         {
-            var family = _ctx.Families.FirstOrDefault(c => c.FamilyId == key);
+            var family = _ctx.Families.FirstOrDefault(c => c.CategoryId == key);
 
             if (family == null)
                 return NotFound();
@@ -78,7 +78,7 @@ namespace Golf.Product.Controllers
         [ODataRoute("Families({key})/Description/$value")]
         public IHttpActionResult GetFamilyPropertyRawValue([FromODataUri] int key)
         {
-            var family = _ctx.Families.FirstOrDefault(c => c.FamilyId == key);
+            var family = _ctx.Families.FirstOrDefault(c => c.CategoryId == key);
 
             if (family == null)
                 return NotFound();
@@ -117,7 +117,7 @@ namespace Golf.Product.Controllers
                 return BadRequest(ModelState);
             }
 
-            var currentFamily = _ctx.Families.FirstOrDefault(c => c.FamilyId == key);
+            var currentFamily = _ctx.Families.FirstOrDefault(c => c.CategoryId == key);
             if (currentFamily == null)
                 return NotFound();
 
@@ -137,7 +137,7 @@ namespace Golf.Product.Controllers
                 return BadRequest(ModelState);
 
 
-            var currentFamily = _ctx.Families.FirstOrDefault(c => c.FamilyId == key);
+            var currentFamily = _ctx.Families.FirstOrDefault(c => c.CategoryId == key);
             if (currentFamily == null)
                 return NotFound();
 
@@ -149,7 +149,7 @@ namespace Golf.Product.Controllers
 
         public IHttpActionResult Delete([FromODataUri] int key)
         {
-            var currentFamily = _ctx.Families.Include("Products").FirstOrDefault(c => c.FamilyId == key);
+            var currentFamily = _ctx.Families.Include("Products").FirstOrDefault(c => c.CategoryId == key);
             if (currentFamily == null)
                 return NotFound();
 

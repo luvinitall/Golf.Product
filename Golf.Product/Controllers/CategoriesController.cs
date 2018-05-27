@@ -169,11 +169,11 @@ namespace Golf.Product.Controllers
 
             int keyOfFamilyToAdd = Request.GetKeyValue<int>(link);
 
-            if (currentCategory.Families.Any(i => i.FamilyId == keyOfFamilyToAdd))
+            if (currentCategory.Families.Any(i => i.CategoryId == keyOfFamilyToAdd))
                 return BadRequest($"The family with id {keyOfFamilyToAdd} is already linked to this category");
 
 
-            var familyLinkToAdd = _ctx.Families.Include("Category").FirstOrDefault(f => f.FamilyId == keyOfFamilyToAdd);
+            var familyLinkToAdd = _ctx.Families.Include("Category").FirstOrDefault(f => f.CategoryId == keyOfFamilyToAdd);
 
             if (familyLinkToAdd == null)
                 return NotFound();

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Golf.Product.Model
 {
@@ -12,10 +13,15 @@ namespace Golf.Product.Model
         [Key]
         public short CategoryId { get; set; }
 
-        [StringLength(150)]
         [Required]
+        [StringLength(250)]
+        [Index("uidx_Category_Description",IsUnique = true)]
         public string Description { get; set; }
 
-        public ICollection<Family> Families { get; set; }
+        public virtual ICollection<Asset> Assets { get; set; }
+
+        public virtual ICollection<Family> Families { get; set; }
+
+        public virtual ICollection<Catalog> Catalogs { get; set; }
     }
 }

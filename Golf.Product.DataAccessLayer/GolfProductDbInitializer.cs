@@ -14,7 +14,7 @@ namespace Golf.Product.DataAccessLayer
         {
             short categoryId = 0;
             int familyId = 0;
-            int productId = 0;
+  
 
             var categoryWoods = new Category()
             {
