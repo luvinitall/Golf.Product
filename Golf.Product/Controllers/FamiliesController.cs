@@ -41,7 +41,7 @@ namespace Golf.Product.Controllers
             if (family == null)
                 return NotFound();
 
-            var propertyToGet = Url.Request.RequestUri.Segments.Last();
+            var propertyToGet = Request.RequestUri.Segments.Last();
 
             if (!family.HasProperty(propertyToGet))
                 return NotFound();
@@ -59,7 +59,7 @@ namespace Golf.Product.Controllers
         [ODataRoute("Families({key})/Products")]
         public IHttpActionResult GetFamilyCollectionProperty([FromODataUri] int key)
         {
-            var propertyToGet = Url.Request.RequestUri.Segments.Last();
+            var propertyToGet = Request.RequestUri.Segments.Last();
 
             var family = _ctx.Families.Include(propertyToGet).FirstOrDefault(c => c.FamilyId == key);
 
@@ -83,7 +83,7 @@ namespace Golf.Product.Controllers
             if (family == null)
                 return NotFound();
 
-            var propertyToGet = Url.Request.RequestUri.Segments[Url.Request.RequestUri.Segments.Length - 2].TrimEnd('/');
+            var propertyToGet = Request.RequestUri.Segments[Request.RequestUri.Segments.Length - 2].TrimEnd('/');
 
             if (!family.HasProperty(propertyToGet))
                 return NotFound();

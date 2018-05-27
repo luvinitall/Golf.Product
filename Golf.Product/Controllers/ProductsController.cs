@@ -40,7 +40,7 @@ namespace Golf.Product.Controllers
             if (product == null)
                 return NotFound();
 
-            var propertyToGet = Url.Request.RequestUri.Segments.Last();
+            var propertyToGet = Request.RequestUri.Segments.Last();
 
             if (!product.HasProperty(propertyToGet))
                 return NotFound();
@@ -68,7 +68,7 @@ namespace Golf.Product.Controllers
             if (product == null)
                 return NotFound();
 
-            var propertyToGet = Url.Request.RequestUri.Segments[Url.Request.RequestUri.Segments.Length - 2].TrimEnd('/');
+            var propertyToGet = Request.RequestUri.Segments[Request.RequestUri.Segments.Length - 2].TrimEnd('/');
 
             if (!product.HasProperty(propertyToGet))
                 return NotFound();

@@ -45,14 +45,14 @@ namespace Golf.Product.Controllers
 
         [HttpGet]
         [ODataRoute("Categories({key})/Description")]
-        public IHttpActionResult GetCategoryProperty([FromODataUri] int key)
+        public virtual IHttpActionResult GetCategoryProperty([FromODataUri] int key)
         {
             var category = _ctx.Categories.FirstOrDefault(c => c.CategoryId == key);
 
             if (category == null)
                 return NotFound();
 
-            var propertyToGet = Url.Request.RequestUri.Segments.Last();
+            var propertyToGet = Request.RequestUri.Segments.Last();
 
             if (!category.HasProperty(propertyToGet))
                 return NotFound();
@@ -91,7 +91,7 @@ namespace Golf.Product.Controllers
             if (category == null)
                 return NotFound();
 
-            var propertyToGet = Url.Request.RequestUri.Segments[Url.Request.RequestUri.Segments.Length - 2].TrimEnd('/');
+            var propertyToGet = Request.RequestUri.Segments[Request.RequestUri.Segments.Length - 2].TrimEnd('/');
 
             if (!category.HasProperty(propertyToGet))
                 return NotFound();
