@@ -6,18 +6,18 @@ namespace Golf.Product.DataAccessLayer
 {
     public class GolfProductDbContext:DbContext
     {
-        public  DbSet<Catalog> Catalogs { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Family> Families { get; set; }
-        public DbSet<Model.Product> Products { get; set; }
-        public DbSet<Asset> Assets { get; set; }
+        public virtual DbSet<Catalog> Catalogs { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Family> Families { get; set; }
+        public virtual DbSet<Model.Product> Products { get; set; }
+        public virtual DbSet<Asset> Assets { get; set; }
         
-        public DbSet<CustomOption> CustomOptions { get; set; }
-        public DbSet<CustomOptionType> CustomOptionTypes { get; set; }
+        public virtual DbSet<CustomOption> CustomOptions { get; set; }
+        public virtual DbSet<CustomOptionType> CustomOptionTypes { get; set; }
 
-        public DbSet<ImageUrl> ImageUrls { get; set; }
+        public virtual DbSet<ImageUrl> ImageUrls { get; set; }
 
-        public DbSet<ProductGroup> ProductGroups { get; set; }
+        public virtual DbSet<ProductGroup> ProductGroups { get; set; }
 
 
         public GolfProductDbContext()
@@ -85,28 +85,15 @@ namespace Golf.Product.DataAccessLayer
                     m.ToTable("ClubComponent");
                 });
 
-
-
- 
-            //modelBuilder.Entity<ShaftComponentCustomOption>()
-            //    .HasMany(e => e.Flexes)
-            //    .WithRequired(e => e.ShaftComponentCustomOption)
-            //    .Map(m => m.ToTable("ClubComponent_ChildOption").MapKey("CustomOptionId", "ChildCustomOptionId"));
+           
 
 
             //modelBuilder.Entity<CustomOption>()
-            //    .HasOptional(e => e.ShaftComponentCustomOption)
-            //    .WithMany(e => e.Flexes);
+            //    .HasOptional(x => x.ShaftComponentCustomOption)
+            //    .WithMany(x => x.Flexes)
+            //    .HasForeignKey(x=>x.CustomOptionId).WillCascadeOnDelete(true);
+            //    //.Map(m => m.ToTable("ClubComponent_ChildOption"));
 
-            //////modelBuilder.Entity<CustomOption>()
-            //////    .HasOptional(x => x.ShaftComponentCustomOption)
-            //////    .WithMany(x => x.Flexes)
-            //////    .Map(m => m.ToTable("ClubComponent_ChildOption").MapKey("CustomOptionId", "ChildCustomOptionId"));
-
-
-
-            //.HasForeignKey(x => x.CustomOptionId)
-            //.WillCascadeOnDelete(true);
 
 
 

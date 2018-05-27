@@ -29,7 +29,7 @@ namespace Golf.Product.Model
         [StringLength(250)]
         public string Description { get; set; }
 
-        //public virtual ComponentCustomOptionBase ClubComponent { get; set; }
+  
         public virtual ICollection<Family> Families { get; set; }
 
         //public virtual ShaftComponentCustomOption ShaftComponentCustomOption { get; set; }
@@ -59,6 +59,6 @@ namespace Golf.Product.Model
         [StringLength(250)]
         public string ShaftModelCode => SapReference;
  
-        //public ICollection<CustomOption> Flexes { get; set; }
+        //public virtual ICollection<CustomOption> Flexes { get; set; }
     }
 }

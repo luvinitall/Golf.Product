@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
@@ -12,7 +13,17 @@ namespace Golf.Product.Controllers
 {
     public class CategoriesController : ODataController
     {
-        GolfProductDbContext _ctx = new GolfProductDbContext();
+        private GolfProductDbContext _ctx;
+
+        public CategoriesController(GolfProductDbContext context)
+        {
+            _ctx = context;
+        }
+
+        public CategoriesController()
+        {
+            _ctx = new GolfProductDbContext();
+        }
 
         [EnableQuery]
         public IHttpActionResult Get()

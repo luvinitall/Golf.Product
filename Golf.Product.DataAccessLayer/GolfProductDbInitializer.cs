@@ -12,25 +12,19 @@ namespace Golf.Product.DataAccessLayer
     {
         protected override void Seed(GolfProductDbContext context)
         {
-            short categoryId = 0;
-            int familyId = 0;
-  
 
             var categoryWoods = new Category()
             {
-                CategoryId = categoryId++,
                 Description = "Woods"
             };
 
             var categoryIrons = new Category()
             {
-                CategoryId = categoryId++,
                 Description = "Irons"
             };
 
             var emptyCategory = new Category()
             {
-                CategoryId = categoryId++,
                 Description = "Empty"
             };
 
@@ -38,58 +32,59 @@ namespace Golf.Product.DataAccessLayer
 
             var familyEpicDriver = new Family()
             {
-                FamilyId = familyId++,
                 Description = "Epic Drivers",
                 Category = categoryWoods
             };
 
             var familyRogueDriver = new Family()
             {
-                FamilyId = familyId++,
                 Description = "Rogue Drivers",
                 Category = categoryWoods
             };
 
             var familyEpicIron = new Family()
             {
-                FamilyId = familyId++,
                 Description = "Epic Irons",
                 Category = categoryIrons
             };
 
             var familyRogueIron = new Family()
             {
-                FamilyId = familyId++,
                 Description = "Rogue Irons",
                 Category = categoryIrons
             };
             
             var familyIronNoProducts = new Family()
             {
-                FamilyId = familyId++,
                 Description = "Empty Family",
                 Category = categoryIrons
             };
 
+            var rogueIronRHMensProductGroup = new ProductGroup(){Description = "Rogue Irons RH Mens"};
+            var rogueIronLHMensProductGroup = new ProductGroup() { Description = "Rogue Irons LH Mens" };
+
+            var rogueIronRHWomensProductGroup = new ProductGroup() { Description = "Rogue Irons RH Womens" };
+            var rogueIronLHWomensProductGroup = new ProductGroup() { Description = "Rogue Irons LH Womens" };
+
             familyRogueIron.Products = new List<Model.Product>();
             var productRogueIron3 =
-                new Model.Product() {Description = "Rogue 3 Iron", Family = familyRogueIron, Sku = "Rogue3Iron", Gender = Gender.Male, Hand = Hand.Right};
+                new Model.Product() {Description = "Rogue 3 Iron", Family = familyRogueIron, Sku = "Rogue3IronMR", Gender = Gender.Male, Hand = Hand.Right, ProductGroup = rogueIronRHMensProductGroup };
             var productRogueIron4 =
-                new Model.Product() { Description = "Rogue 4 Iron", Family = familyRogueIron, Sku = "Rogue4Iron", Gender = Gender.Male, Hand = Hand.Right };
+                new Model.Product() { Description = "Rogue 4 Iron", Family = familyRogueIron, Sku = "Rogue4IronMR", Gender = Gender.Male, Hand = Hand.Right, ProductGroup = rogueIronRHMensProductGroup };
             var productRogueIron5 =
-                new Model.Product() { Description = "Rogue 5 Iron", Family = familyRogueIron, Sku = "Rogue5Iron", Gender = Gender.Male, Hand = Hand.Right };
+                new Model.Product() { Description = "Rogue 5 Iron", Family = familyRogueIron, Sku = "Rogue5IronMR", Gender = Gender.Male, Hand = Hand.Right, ProductGroup = rogueIronRHMensProductGroup };
             var productRogueIron6 =
-                new Model.Product() { Description = "Rogue 6 Iron", Family = familyRogueIron, Sku = "Rogue6Iron", Gender = Gender.Male, Hand = Hand.Right };
+                new Model.Product() { Description = "Rogue 6 Iron", Family = familyRogueIron, Sku = "Rogue6IronMR", Gender = Gender.Male, Hand = Hand.Right, ProductGroup = rogueIronRHMensProductGroup };
             var productRogueIron7 =
-                new Model.Product() { Description = "Rogue 7 Iron", Family = familyRogueIron, Sku = "Rogue7Iron", Gender = Gender.Male, Hand = Hand.Right };
+                new Model.Product() { Description = "Rogue 7 Iron", Family = familyRogueIron, Sku = "Rogue7IronMR", Gender = Gender.Male, Hand = Hand.Right, ProductGroup = rogueIronRHMensProductGroup };
             var productRogueIron8 =
-                new Model.Product() { Description = "Rogue 8 Iron", Family = familyRogueIron, Sku = "Rogue8Iron", Gender = Gender.Male, Hand = Hand.Right };
+                new Model.Product() { Description = "Rogue 8 Iron", Family = familyRogueIron, Sku = "Rogue8IronMR", Gender = Gender.Male, Hand = Hand.Right, ProductGroup = rogueIronRHMensProductGroup };
             var productRogueIron9 =
-                new Model.Product() { Description = "Rogue 9 Iron", Family = familyRogueIron, Sku = "Rogue9Iron", Gender = Gender.Male, Hand = Hand.Right };
+                new Model.Product() { Description = "Rogue 9 Iron", Family = familyRogueIron, Sku = "Rogue9IronMR", Gender = Gender.Male, Hand = Hand.Right, ProductGroup = rogueIronRHMensProductGroup };
             var productRogueIronSet1 =
-                new Model.Product() { Description = "Rogue 3-P Iron", Family = familyRogueIron, Sku = "Rogue3PIron", Gender = Gender.Male, Hand = Hand.Right };
+                new Model.Product() { Description = "Rogue 3-P Iron", Family = familyRogueIron, Sku = "Rogue3PIronMR", Gender = Gender.Male, Hand = Hand.Right, ProductGroup = rogueIronRHMensProductGroup };
             var productRogueIronSet2 =
-                new Model.Product() { Description = "Rogue 5-P Iron", Family = familyRogueIron, Sku = "Rogue5PIron", Gender = Gender.Male, Hand = Hand.Right };
+                new Model.Product() { Description = "Rogue 5-P Iron", Family = familyRogueIron, Sku = "Rogue5PIronMR", Gender = Gender.Male, Hand = Hand.Right, ProductGroup = rogueIronRHMensProductGroup };
 
             familyRogueIron.Products.Add(productRogueIron3);
             familyRogueIron.Products.Add(productRogueIron4);
@@ -103,18 +98,18 @@ namespace Golf.Product.DataAccessLayer
      
 
             var productRogueIron5F =
-                new Model.Product() { Description = "Rogue 5 Iron", Family = familyRogueIron, Sku = "Rogue5Iron", Gender = Gender.Female, Hand = Hand.Right };
+                new Model.Product() { Description = "Rogue 5 Iron", Family = familyRogueIron, Sku = "Rogue5IronWR", Gender = Gender.Female, Hand = Hand.Right, ProductGroup = rogueIronRHWomensProductGroup };
             var productRogueIron6F =
-                new Model.Product() { Description = "Rogue 6 Iron", Family = familyRogueIron, Sku = "Rogue6Iron", Gender = Gender.Female, Hand = Hand.Right };
+                new Model.Product() { Description = "Rogue 6 Iron", Family = familyRogueIron, Sku = "Rogue6IronWR", Gender = Gender.Female, Hand = Hand.Right, ProductGroup = rogueIronRHWomensProductGroup };
             var productRogueIron7F =
-                new Model.Product() { Description = "Rogue 7 Iron", Family = familyRogueIron, Sku = "Rogue7Iron", Gender = Gender.Female, Hand = Hand.Right };
+                new Model.Product() { Description = "Rogue 7 Iron", Family = familyRogueIron, Sku = "Rogue7IronWR", Gender = Gender.Female, Hand = Hand.Right, ProductGroup = rogueIronRHWomensProductGroup };
             var productRogueIron8F =
-                new Model.Product() { Description = "Rogue 8 Iron", Family = familyRogueIron, Sku = "Rogue8Iron", Gender = Gender.Female, Hand = Hand.Right };
+                new Model.Product() { Description = "Rogue 8 Iron", Family = familyRogueIron, Sku = "Rogue8IronWR", Gender = Gender.Female, Hand = Hand.Right, ProductGroup = rogueIronRHWomensProductGroup };
             var productRogueIron9F =
-                new Model.Product() { Description = "Rogue 9 Iron", Family = familyRogueIron, Sku = "Rogue9Iron", Gender = Gender.Female, Hand = Hand.Right };
+                new Model.Product() { Description = "Rogue 9 Iron", Family = familyRogueIron, Sku = "Rogue9IronWR", Gender = Gender.Female, Hand = Hand.Right, ProductGroup = rogueIronRHWomensProductGroup };
             
             var productRogueIronSetF =
-                new Model.Product() { Description = "Rogue 5-P Iron", Family = familyRogueIron, Sku = "Rogue5PIron", Gender = Gender.Female, Hand = Hand.Right };
+                new Model.Product() { Description = "Rogue 5-P Iron", Family = familyRogueIron, Sku = "Rogue5PIronWR", Gender = Gender.Female, Hand = Hand.Right, ProductGroup = rogueIronRHWomensProductGroup };
 
 
             familyRogueIron.Products.Add(productRogueIron5F);
@@ -128,18 +123,18 @@ namespace Golf.Product.DataAccessLayer
 
 
             var productRogueIron5LH =
-                new Model.Product() { Description = "Rogue 5 Iron", Family = familyRogueIron, Sku = "Rogue5Iron", Gender = Gender.Male, Hand = Hand.Left };
+                new Model.Product() { Description = "Rogue 5 Iron", Family = familyRogueIron, Sku = "Rogue5IronLM", Gender = Gender.Male, Hand = Hand.Left, ProductGroup = rogueIronLHMensProductGroup };
             var productRogueIron6LH =
-                new Model.Product() { Description = "Rogue 6 Iron", Family = familyRogueIron, Sku = "Rogue6Iron", Gender = Gender.Male, Hand = Hand.Left };
+                new Model.Product() { Description = "Rogue 6 Iron", Family = familyRogueIron, Sku = "Rogue6IronLM", Gender = Gender.Male, Hand = Hand.Left, ProductGroup = rogueIronLHMensProductGroup };
             var productRogueIron7LH =
-                new Model.Product() { Description = "Rogue 7 Iron", Family = familyRogueIron, Sku = "Rogue7Iron", Gender = Gender.Male, Hand = Hand.Left };
+                new Model.Product() { Description = "Rogue 7 Iron", Family = familyRogueIron, Sku = "Rogue7IronLM", Gender = Gender.Male, Hand = Hand.Left, ProductGroup = rogueIronLHMensProductGroup };
             var productRogueIron8LH =
-                new Model.Product() { Description = "Rogue 8 Iron", Family = familyRogueIron, Sku = "Rogue8Iron", Gender = Gender.Male, Hand = Hand.Left };
+                new Model.Product() { Description = "Rogue 8 Iron", Family = familyRogueIron, Sku = "Rogue8IronLM", Gender = Gender.Male, Hand = Hand.Left, ProductGroup = rogueIronLHMensProductGroup };
             var productRogueIron9LH =
-                new Model.Product() { Description = "Rogue 9 Iron", Family = familyRogueIron, Sku = "Rogue9Iron", Gender = Gender.Male, Hand = Hand.Left };
+                new Model.Product() { Description = "Rogue 9 Iron", Family = familyRogueIron, Sku = "Rogue9IronLM", Gender = Gender.Male, Hand = Hand.Left, ProductGroup = rogueIronLHMensProductGroup };
             
             var productRogueIronSetLH =
-                new Model.Product() { Description = "Rogue 5-P Iron", Family = familyRogueIron, Sku = "Rogue5PIron", Gender = Gender.Male, Hand = Hand.Left };
+                new Model.Product() { Description = "Rogue 5-P Iron", Family = familyRogueIron, Sku = "Rogue5PIronLM", Gender = Gender.Male, Hand = Hand.Left, ProductGroup = rogueIronLHMensProductGroup };
 
 
             familyRogueIron.Products.Add(productRogueIron5LH);
@@ -150,13 +145,13 @@ namespace Golf.Product.DataAccessLayer
             familyRogueIron.Products.Add(productRogueIronSetLH);
 
             var productRogueIron5LHF =
-                new Model.Product() { Description = "Rogue 5 Iron", Family = familyRogueIron, Sku = "Rogue5Iron", Gender = Gender.Female, Hand = Hand.Left };
+                new Model.Product() { Description = "Rogue 5 Iron", Family = familyRogueIron, Sku = "Rogue5IronLW", Gender = Gender.Female, Hand = Hand.Left, ProductGroup = rogueIronLHWomensProductGroup };
             
             var productRogueIron7LHF =
-                new Model.Product() { Description = "Rogue 7 Iron", Family = familyRogueIron, Sku = "Rogue7Iron", Gender = Gender.Female, Hand = Hand.Left };
+                new Model.Product() { Description = "Rogue 7 Iron", Family = familyRogueIron, Sku = "Rogue7IronLW", Gender = Gender.Female, Hand = Hand.Left, ProductGroup = rogueIronLHWomensProductGroup };
             
             var productRogueIron9LHF =
-                new Model.Product() { Description = "Rogue 9 Iron", Family = familyRogueIron, Sku = "Rogue9Iron", Gender = Gender.Female, Hand = Hand.Left };
+                new Model.Product() { Description = "Rogue 9 Iron", Family = familyRogueIron, Sku = "Rogue9IronLW", Gender = Gender.Female, Hand = Hand.Left, ProductGroup = rogueIronLHWomensProductGroup };
 
             familyRogueIron.Products.Add(productRogueIron5LHF);
             familyRogueIron.Products.Add(productRogueIron7LHF);

@@ -20,7 +20,7 @@ namespace Golf.Product
             // Web API routes
             config.MapODataServiceRoute("ODataRoute", "odata", GetEdmModel());
             //config.EnsureInitialized();
-            config.Select().Expand().Filter().OrderBy().MaxTop(10000).Count();
+            config.Select().Expand().Filter().OrderBy().MaxTop(10).Count();
         }
 
         private static IEdmModel GetEdmModel()
