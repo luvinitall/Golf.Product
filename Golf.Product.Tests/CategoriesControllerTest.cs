@@ -173,73 +173,7 @@ namespace Golf.Product.Tests
 
 
         #region TestConverageForGetCategoryProperty
-
         
-
-        [TestMethod]
-        public void GetCategoryProperty_Match_AndHttpOK()
-        {
-            short categoryId = 12;
-            string categoryDescription = "Some Description";
-
-            //arrange
-            var data = new List<Category>()
-            {
-                new Category()
-                    {Description = categoryDescription, CategoryId = categoryId},
-                new Category()
-                    {Description = "Dont find me", CategoryId = 1}
-            }.AsQueryable();
-
-
-            var mockContext = new Mock<GolfProductDbContext>();
-            mockContext.Setup(m => m.Categories).Returns(GetMockDbSet(data).Object);
-
-            var controller = new CategoriesController(mockContext.Object);
-
-         
-
-            var actionResult = controller.GetCategoryProperty(categoryId);
-
-
-            //assert  
-            Assert.IsInstanceOfType(actionResult, typeof(OkNegotiatedContentResult<SingleResult<Category>>));
-            //Assert.IsNotNull(actionResult?.Content);
-
-            ////I'm not testing for order, so no expectations on what order these will be returned in
-            //Assert.IsTrue(actionResult.Content.Queryable.Single().CategoryId == categoryId);
-            //Assert.IsTrue(actionResult.Content.Queryable.Single().Description == categoryDescription);
-        }
-
-        [TestMethod]
-        public void GetCategoryProperty_NoMatch_AndHttpNotFound()
-        {
-            short categoryId = 12;
-            string categoryDescription = "Some Description";
-
-            //arrange
-            var data = new List<Category>()
-            {
-                new Category()
-                    {Description = categoryDescription, CategoryId = categoryId},
-                new Category()
-                    {Description = "Dont find me", CategoryId = 1}
-            }.AsQueryable();
-
-
-            var mockContext = new Mock<GolfProductDbContext>();
-            mockContext.Setup(m => m.Categories).Returns(GetMockDbSet(data).Object);
-
-            var controller = new CategoriesController(mockContext.Object);
-
-            short bogusCategoryId = 999;
-            //act
-            var actionResult = controller.GetCategoryProperty(bogusCategoryId);
-
-
-            //assert  
-            Assert.IsInstanceOfType(actionResult, typeof(NotFoundResult));
-        }
 
         [TestMethod]
         public void GetSingleCategory_ReturnsMatch_UsePropertyRoute_AndHttpOK()
@@ -315,6 +249,79 @@ namespace Golf.Product.Tests
             Assert.IsNotNull(content);
 
             Assert.AreEqual(categoryDescription, content.Value);
+        }
+
+        [TestMethod]
+        public void GetSingleCategory_ReturnsNoMatch_UsePropertyRoute_AndHttpNotFound()
+        {
+            //TODO: Refactor this to test the actual method and routing seperately.
+            //Could probably mock the controller to verify that the routing works
+            //and then test the actual controller seperately
+
+            // Arrange
+            short categoryId = 12;
+            string categoryDescription = "Some Description";
+
+            //arrange
+            var data = new List<Category>()
+            {
+                new Category()
+                    {Description = categoryDescription, CategoryId = categoryId},
+                new Category()
+                    {Description = "Dont find me", CategoryId = 1}
+            }.AsQueryable();
+
+
+            var mockContext = new Mock<GolfProductDbContext>();
+            mockContext.Setup(m => m.Categories).Returns(GetMockDbSet(data).Object);
+
+            var controller = new CategoriesController(mockContext.Object);
+
+            var config = new HttpConfiguration();
+
+
+            WebApiConfig.Register(config);
+
+            config.EnableDependencyInjection();
+            config.EnsureInitialized();
+
+            short bogusCategoryId = 999;
+
+            //we aren't going to make a real web request, the url will be passed to the controller to determine 
+            //routing only
+            string url = $"http://localhost/odata/Categories({bogusCategoryId})/Description";
+
+
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.SetConfiguration(config);
+
+            //Act
+            var routeData = config.Routes.GetRouteData(request);
+
+
+            Assert.AreEqual("Categories", routeData.Values["controller"]);
+
+
+            request.Properties[HttpPropertyKeys.HttpRouteDataKey] = routeData;
+            request.Properties[HttpPropertyKeys.HttpConfigurationKey] = config;
+
+
+            var controllerSelector = config.Services.GetHttpControllerSelector();
+            var ctrlDescriptor = controllerSelector.SelectController(request);
+
+
+            HttpControllerContext ctx =
+                new HttpControllerContext(config, routeData, request)
+                {
+                    Controller = controller,
+                    ControllerDescriptor = ctrlDescriptor
+                };
+
+
+            var result = controller.ExecuteAsync(ctx, CancellationToken.None).Result;
+
+            Assert.IsTrue(result.StatusCode == HttpStatusCode.NotFound);
+
         }
 
 

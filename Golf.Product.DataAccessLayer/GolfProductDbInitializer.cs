@@ -13,14 +13,18 @@ namespace Golf.Product.DataAccessLayer
         protected override void Seed(GolfProductDbContext context)
         {
 
+            var usCatalog = new Catalog(){CatalogId = 1, Description = "US Catalog"};
+            var japanCatalog = new Catalog() { CatalogId = 2, Description = "JP Catalog" };
+
             var categoryWoods = new Category()
             {
-                Description = "Woods"
+               
+                Description = "Woods", Catalogs = new List<Catalog>() { usCatalog, japanCatalog}
             };
 
             var categoryIrons = new Category()
             {
-                Description = "Irons"
+                Description = "Irons", Catalogs = new List<Catalog>() { usCatalog}
             };
 
             var emptyCategory = new Category()
@@ -160,6 +164,9 @@ namespace Golf.Product.DataAccessLayer
 
             categoryIrons.Families = new List<Family>(){familyRogueIron, familyEpicIron ,familyIronNoProducts};
             categoryWoods.Families = new List<Family>() { familyEpicDriver, familyRogueDriver };
+
+            context.Catalogs.Add(usCatalog);
+            context.Catalogs.Add(japanCatalog);
 
             context.Categories.Add(categoryWoods);
             context.Categories.Add(categoryIrons);
