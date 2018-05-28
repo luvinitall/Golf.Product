@@ -31,7 +31,6 @@ namespace Golf.Product.Tests
     [TestClass]
     public class CategoriesControllerTest
     {
-
         private static Mock<DbSet<Category>> GetMockDbSet(IQueryable<Category> data)
         {
             //Setup requried for DBSet
@@ -57,7 +56,7 @@ namespace Golf.Product.Tests
             var data = new List<Category>()
             {
                 new Category()
-                    {Description = categoryDescription1}, 
+                    {Description = categoryDescription1},
                 new Category()
                     {Description = categoryDescription2},
                 new Category()
@@ -71,19 +70,17 @@ namespace Golf.Product.Tests
 
             //act
             var actionResult = controller.Get() as OkNegotiatedContentResult<DbSet<Category>>;
-  
+
 
             //assert  
-            Assert.IsInstanceOfType(actionResult, typeof(OkNegotiatedContentResult<DbSet<Category>>)); 
+            Assert.IsInstanceOfType(actionResult, typeof(OkNegotiatedContentResult<DbSet<Category>>));
             Assert.IsNotNull(actionResult?.Content);
-            Assert.AreEqual(3,actionResult.Content.Count() );
+            Assert.AreEqual(3, actionResult.Content.Count());
 
             //I'm not testing for order, so no expectations on what order these will be returned in
-            Assert.IsTrue(actionResult.Content.Any(c=>c.Description == categoryDescription1));
+            Assert.IsTrue(actionResult.Content.Any(c => c.Description == categoryDescription1));
             Assert.IsTrue(actionResult.Content.Any(c => c.Description == categoryDescription2));
             Assert.IsTrue(actionResult.Content.Any(c => c.Description == categoryDescription3));
-
-        
         }
 
         [TestMethod]
@@ -92,7 +89,6 @@ namespace Golf.Product.Tests
             //arrange
             var data = new List<Category>()
             {
-   
             }.AsQueryable();
 
 
@@ -109,8 +105,6 @@ namespace Golf.Product.Tests
             Assert.IsInstanceOfType(actionResult, typeof(OkNegotiatedContentResult<DbSet<Category>>));
             Assert.IsNotNull(actionResult?.Content);
             Assert.AreEqual(0, actionResult.Content.Count());
-
-
         }
 
         [TestMethod]
@@ -145,9 +139,6 @@ namespace Golf.Product.Tests
             //I'm not testing for order, so no expectations on what order these will be returned in
             Assert.IsTrue(actionResult.Content.Queryable.Single().CategoryId == categoryId);
             Assert.IsTrue(actionResult.Content.Queryable.Single().Description == categoryDescription);
-
-
-
         }
 
         [TestMethod]
@@ -178,12 +169,80 @@ namespace Golf.Product.Tests
 
             //assert  
             Assert.IsInstanceOfType(actionResult, typeof(NotFoundResult));
+        }
 
 
+        #region TestConverageForGetCategoryProperty
+
+        
+
+        [TestMethod]
+        public void GetCategoryProperty_Match_AndHttpOK()
+        {
+            short categoryId = 12;
+            string categoryDescription = "Some Description";
+
+            //arrange
+            var data = new List<Category>()
+            {
+                new Category()
+                    {Description = categoryDescription, CategoryId = categoryId},
+                new Category()
+                    {Description = "Dont find me", CategoryId = 1}
+            }.AsQueryable();
+
+
+            var mockContext = new Mock<GolfProductDbContext>();
+            mockContext.Setup(m => m.Categories).Returns(GetMockDbSet(data).Object);
+
+            var controller = new CategoriesController(mockContext.Object);
+
+         
+
+            var actionResult = controller.GetCategoryProperty(categoryId);
+
+
+            //assert  
+            Assert.IsInstanceOfType(actionResult, typeof(OkNegotiatedContentResult<SingleResult<Category>>));
+            //Assert.IsNotNull(actionResult?.Content);
+
+            ////I'm not testing for order, so no expectations on what order these will be returned in
+            //Assert.IsTrue(actionResult.Content.Queryable.Single().CategoryId == categoryId);
+            //Assert.IsTrue(actionResult.Content.Queryable.Single().Description == categoryDescription);
         }
 
         [TestMethod]
-        public void GetSingleCategoryReturnsDescriptionProperty_AndHttpOK()
+        public void GetCategoryProperty_NoMatch_AndHttpNotFound()
+        {
+            short categoryId = 12;
+            string categoryDescription = "Some Description";
+
+            //arrange
+            var data = new List<Category>()
+            {
+                new Category()
+                    {Description = categoryDescription, CategoryId = categoryId},
+                new Category()
+                    {Description = "Dont find me", CategoryId = 1}
+            }.AsQueryable();
+
+
+            var mockContext = new Mock<GolfProductDbContext>();
+            mockContext.Setup(m => m.Categories).Returns(GetMockDbSet(data).Object);
+
+            var controller = new CategoriesController(mockContext.Object);
+
+            short bogusCategoryId = 999;
+            //act
+            var actionResult = controller.GetCategoryProperty(bogusCategoryId);
+
+
+            //assert  
+            Assert.IsInstanceOfType(actionResult, typeof(NotFoundResult));
+        }
+
+        [TestMethod]
+        public void GetSingleCategory_ReturnsMatch_UsePropertyRoute_AndHttpOK()
         {
             //TODO: Refactor this to test the actual method and routing seperately.
             //Could probably mock the controller to verify that the routing works
@@ -209,27 +268,26 @@ namespace Golf.Product.Tests
             var controller = new CategoriesController(mockContext.Object);
 
             var config = new HttpConfiguration();
-            
+
 
             WebApiConfig.Register(config);
 
             config.EnableDependencyInjection();
             config.EnsureInitialized();
 
-
+            //we aren't going to make a real web request, the url will be passed to the controller to determine 
+            //routing only
             string url = $"http://localhost/odata/Categories({categoryId})/Description";
 
 
-             
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.SetConfiguration(config);
 
-                var request = new HttpRequestMessage(HttpMethod.Get, url);
-                request.SetConfiguration(config);
-      
-                //Act
-                var routeData = config.Routes.GetRouteData(request);
+            //Act
+            var routeData = config.Routes.GetRouteData(request);
 
 
-                Assert.AreEqual("Categories", routeData.Values["controller"]);
+            Assert.AreEqual("Categories", routeData.Values["controller"]);
 
 
             request.Properties[HttpPropertyKeys.HttpRouteDataKey] = routeData;
@@ -240,28 +298,26 @@ namespace Golf.Product.Tests
             var ctrlDescriptor = controllerSelector.SelectController(request);
 
 
-       
+            HttpControllerContext ctx =
+                new HttpControllerContext(config, routeData, request)
+                {
+                    Controller = controller,
+                    ControllerDescriptor = ctrlDescriptor
+                };
 
-            HttpControllerContext ctx = new HttpControllerContext(config, routeData, request){Controller = controller, ControllerDescriptor =ctrlDescriptor };
-            
 
             var result = controller.ExecuteAsync(ctx, CancellationToken.None).Result;
 
             Assert.IsTrue(result.StatusCode == HttpStatusCode.OK);
 
             var content = result.Content as System.Net.Http.ObjectContent<string>;
-            
+
             Assert.IsNotNull(content);
 
             Assert.AreEqual(categoryDescription, content.Value);
-
-
-
         }
 
 
-      
-
-
+        #endregion TestConverageForGetCategoryProperty
     }
 }
