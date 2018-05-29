@@ -18,10 +18,10 @@ namespace Golf.Product.Model
         [Index("uidx_Category_Description",IsUnique = true)]
         public string Description { get; set; }
 
-        public virtual ICollection<Asset> Assets { get; set; }
+        //public virtual ICollection<Asset> Assets { get; set; }
 
-        public virtual ICollection<Family> Families { get; set; }
+        public virtual ICollection<Family> Families { get; set; } = new List<Family>();
 
-        public virtual ICollection<Catalog> Catalogs { get; set; }
+        public virtual ICollection<Catalog> Catalogs { get; set; } = new List<Catalog>();
     }
 }

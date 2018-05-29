@@ -10,12 +10,12 @@ namespace Golf.Product.DataAccessLayer
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Family> Families { get; set; }
         public virtual DbSet<Model.Product> Products { get; set; }
-        public virtual DbSet<Asset> Assets { get; set; }
+        //public virtual DbSet<Asset> Assets { get; set; }
         
-        public virtual DbSet<CustomOption> CustomOptions { get; set; }
-        public virtual DbSet<CustomOptionType> CustomOptionTypes { get; set; }
+        //public virtual DbSet<CustomOption> CustomOptions { get; set; }
+        //public virtual DbSet<CustomOptionType> CustomOptionTypes { get; set; }
 
-        public virtual DbSet<ImageUrl> ImageUrls { get; set; }
+        //public virtual DbSet<ImageUrl> ImageUrls { get; set; }
 
         public virtual DbSet<ProductGroup> ProductGroups { get; set; }
 
@@ -32,15 +32,15 @@ namespace Golf.Product.DataAccessLayer
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
-            modelBuilder.Entity<Asset>()
-                .HasMany(e => e.Categories)
-                .WithMany(e => e.Assets)
-                .Map(m => m.ToTable("Category_Asset").MapLeftKey("CategoryId").MapRightKey("AssetId"));
+            //modelBuilder.Entity<Asset>()
+            //    .HasMany(e => e.Categories)
+            //    .WithMany(e => e.Assets)
+            //    .Map(m => m.ToTable("Category_Asset").MapLeftKey("CategoryId").MapRightKey("AssetId"));
 
-            modelBuilder.Entity<Asset>()
-                .HasMany(e => e.ClubComponents)
-                .WithMany(e => e.Assets)
-                .Map(m => m.ToTable("ClubComponent_Asset").MapLeftKey("CustomOptionId").MapRightKey("AssetId"));
+            //modelBuilder.Entity<Asset>()
+            //    .HasMany(e => e.ClubComponents)
+            //    .WithMany(e => e.Assets)
+            //    .Map(m => m.ToTable("ClubComponent_Asset").MapLeftKey("CustomOptionId").MapRightKey("AssetId"));
 
             
 
@@ -58,55 +58,46 @@ namespace Golf.Product.DataAccessLayer
             
 
 
-            modelBuilder.Entity<CustomOption>()
-                .HasMany(e => e.Families)
-                .WithMany(e => e.CustomOptions)
-                .Map(m => m.ToTable("Family_CustomOption").MapLeftKey("FamilyId").MapRightKey("CustomOptionId"));
+            //modelBuilder.Entity<CustomOption>()
+            //    .HasMany(e => e.Families)
+            //    .WithMany(e => e.CustomOptions)
+            //    .Map(m => m.ToTable("Family_CustomOption").MapLeftKey("FamilyId").MapRightKey("CustomOptionId"));
 
 
-            modelBuilder.Entity<ComponentCustomOptionBase>()
-                .Map(m =>
-                {
-                    m.MapInheritedProperties();
-                    m.ToTable("ClubComponent");
-                });
+            //modelBuilder.Entity<ComponentCustomOptionBase>()
+            //    .Map(m =>
+            //    {
+            //        m.MapInheritedProperties();
+            //        m.ToTable("ClubComponent");
+            //    });
 
-            modelBuilder.Entity<GripComponentCustomOption>()
-                .Map(m =>
-                {
-                    m.MapInheritedProperties();
-                    m.ToTable("ClubComponent");
-                });
+            //modelBuilder.Entity<GripComponentCustomOption>()
+            //    .Map(m =>
+            //    {
+            //        m.MapInheritedProperties();
+            //        m.ToTable("ClubComponent");
+            //    });
 
-            modelBuilder.Entity<ShaftComponentCustomOption>()
-                .Map(m =>
-                {
-                    m.MapInheritedProperties();
-                    m.ToTable("ClubComponent");
-                });
+            //modelBuilder.Entity<ShaftComponentCustomOption>()
+            //    .Map(m =>
+            //    {
+            //        m.MapInheritedProperties();
+            //        m.ToTable("ClubComponent");
+            //    });
 
            
 
 
-            //modelBuilder.Entity<CustomOption>()
-            //    .HasOptional(x => x.ShaftComponentCustomOption)
-            //    .WithMany(x => x.Flexes)
-            //    .HasForeignKey(x=>x.CustomOptionId).WillCascadeOnDelete(true);
-            //    //.Map(m => m.ToTable("ClubComponent_ChildOption"));
 
 
+            //modelBuilder.Entity<ComponentCustomOptionBase>()
+            //    .Property(e => e.SapReference)
+            //    .IsUnicode(false);
 
-
-
-
-            modelBuilder.Entity<ComponentCustomOptionBase>()
-                .Property(e => e.SapReference)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<CustomOptionType>()
-                .HasMany(e => e.CustomOptions)
-                .WithRequired(e => e.CustomOptionType)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<CustomOptionType>()
+            //    .HasMany(e => e.CustomOptions)
+            //    .WithRequired(e => e.CustomOptionType)
+            //    .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Family>()
                 .HasMany(e => e.Products)

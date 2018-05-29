@@ -254,6 +254,20 @@ namespace Golf.Product.Controllers
 
         }
 
+        private const short US_CATALOG_ID = 1;
+        [HttpGet]
+        [ODataRoute("US Catalog")]
+        [EnableQuery]
+        public IHttpActionResult GetSingletonUSCatalog()
+        {
+            var catalog = _ctx.Catalogs.Where(c => c.CatalogId == US_CATALOG_ID);
+
+            if (!catalog.Any())
+                return NotFound();
+
+            return Ok(SingleResult.Create(catalog));
+        }
+
         protected override void Dispose(bool disposing)
         {
             _ctx?.Dispose();

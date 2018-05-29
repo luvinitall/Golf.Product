@@ -46,7 +46,17 @@ namespace Golf.Product
             builder.EntitySet<Category>("Categories");
             builder.EntitySet<Family>("Families");
             builder.EntitySet<Model.Product>("Products");
-     
+
+            var areBestSellingProducts =
+                builder.EntityType<Model.Product>().Collection.Function("GetSets");
+            areBestSellingProducts.ReturnsCollectionFromEntitySet<Model.Product>("Products");
+            areBestSellingProducts.Namespace = "Golf.Product.Functions";
+
+            var updateAllClubsToRightHanded = builder.EntityType<Model.Product>().Collection.Action("SetAllProductsAsRightHanded");
+            updateAllClubsToRightHanded.Namespace = "Golf.Product.Actions";
+
+            builder.Singleton<Catalog>("US Catalog");
+
             return builder.GetEdmModel();
         }
     }

@@ -14,7 +14,7 @@ namespace Golf.Product.Model
         [Index("uidx_Catalog_Description",IsUnique = true)]
         public string Description { get; set; }
 
-        public virtual ICollection<Category> Categories { get; set; }
+        public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
 
 
     }

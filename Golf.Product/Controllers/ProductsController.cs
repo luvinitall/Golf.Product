@@ -5,6 +5,7 @@ using System.Web.OData;
 using System.Web.OData.Routing;
 using Golf.Product.DataAccessLayer;
 using Golf.Product.Helpers;
+using Golf.Product.Model;
 
 namespace Golf.Product.Controllers
 {
@@ -12,137 +13,164 @@ namespace Golf.Product.Controllers
     {
         GolfProductDbContext _ctx = new GolfProductDbContext();
 
+        [EnableQuery]
         public IHttpActionResult Get()
         {
             return Ok(_ctx.Products);
 
         }
-
+        [EnableQuery]
         public IHttpActionResult Get([FromODataUri] int key)
         {
-            var product = _ctx.Products.FirstOrDefault(p => p.ProductId == key);
+            var product = _ctx.Products.Where(p => p.ProductId == key);
 
-            if (product == null)
+            if (!product.Any())
                 return NotFound();
 
-            return Ok(product);
+            return Ok(SingleResult.Create(product));
+
         }
 
         [HttpGet]
-        [ODataRoute("Products({key})/Description")]
-        [ODataRoute("Products({key})/Sku")]
-        [ODataRoute("Products({key})/Hand")]
-        [ODataRoute("Products({key})/Gender")]
-        public IHttpActionResult GetProductProperty([FromODataUri] int key)
+        [ODataRoute("Products/Golf.Product.Functions.GetSets")]
+        public IHttpActionResult GetSets()
         {
-            var product = _ctx.Products.FirstOrDefault(p => p.ProductId == key);
-
-            if (product == null)
-                return NotFound();
-
-            var propertyToGet = Request.RequestUri.Segments.Last();
-
-            if (!product.HasProperty(propertyToGet))
-                return NotFound();
-
-            var propertyValue = product.GetValue(propertyToGet);
-
-            if (propertyValue == null)
-                return StatusCode(System.Net.HttpStatusCode.NoContent);
-
-
-            return this.CreateOKHttpActionResult(propertyValue);
+            return this.CreateOKHttpActionResult(_ctx.Products.Where(p =>  p.Description.IndexOf("-") > 0)); 
         }
 
 
-
-        [HttpGet]
-        [ODataRoute("Products({key})/Description/$value")]
-        [ODataRoute("Products({key})/Sku/$value")]
-        [ODataRoute("Products({key})/Hand/$value")]
-        [ODataRoute("Products({key})/Gender/$value")]
-        public IHttpActionResult GetPersonPropertyRawValue([FromODataUri] int key)
+        [HttpPost]
+        [ODataRoute("Products/Golf.Product.Actions.SetAllProductsAsRightHanded")]
+        public IHttpActionResult SetAllProductsAsRightHanded()
         {
-            var product = _ctx.Products.FirstOrDefault(p => p.ProductId == key);
-
-            if (product == null)
-                return NotFound();
-
-            var propertyToGet = Request.RequestUri.Segments[Request.RequestUri.Segments.Length - 2].TrimEnd('/');
-
-            if (!product.HasProperty(propertyToGet))
-                return NotFound();
-
-            var propertyValue = product.GetValue(propertyToGet);
-
-            if (propertyValue == null)
-                return StatusCode(System.Net.HttpStatusCode.NoContent);
-
-
-            return this.CreateOKHttpActionResult(propertyValue.ToString());
-        }
-
-        public IHttpActionResult Post(Model.Product product)
-        {
-            if (!ModelState.IsValid)
+            foreach (var product in _ctx.Products)
             {
-                return BadRequest(ModelState);
+                product.Hand = Hand.Right;
             }
 
-            _ctx.Products.Add(product);
-            _ctx.SaveChanges();
+            if (_ctx.SaveChanges()  > -1)
+                return Ok();
 
-            return Created(product);
+            return InternalServerError();
+
+          
         }
 
-        public IHttpActionResult Put([FromODataUri] int key, Model.Product product)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[HttpGet]
+        //[ODataRoute("Products({key})/Description")]
+        //[ODataRoute("Products({key})/Sku")]
+        //[ODataRoute("Products({key})/Hand")]
+        //[ODataRoute("Products({key})/Gender")]
+        //public IHttpActionResult GetProductProperty([FromODataUri] int key)
+        //{
+        //    var product = _ctx.Products.FirstOrDefault(p => p.ProductId == key);
 
-            var currentproduct = _ctx.Products.FirstOrDefault(p => p.ProductId == key);
-            if (currentproduct == null)
-                return NotFound();
+        //    if (product == null)
+        //        return NotFound();
 
-            product.ProductId = currentproduct.ProductId;
+        //    var propertyToGet = Request.RequestUri.Segments.Last();
 
+        //    if (!product.HasProperty(propertyToGet))
+        //        return NotFound();
 
-            _ctx.Entry(currentproduct).CurrentValues.SetValues(product);
+        //    var propertyValue = product.GetValue(propertyToGet);
 
-            _ctx.SaveChanges();
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        public IHttpActionResult Patch([FromODataUri] int key, Delta<Model.Product> patch)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+        //    if (propertyValue == null)
+        //        return StatusCode(System.Net.HttpStatusCode.NoContent);
 
 
-            var currentproduct = _ctx.Products.FirstOrDefault(p => p.ProductId == key);
-            if (currentproduct == null)
-                return NotFound();
+        //    return this.CreateOKHttpActionResult(propertyValue);
+        //}
 
-            patch.Patch(currentproduct);
-            _ctx.SaveChanges();
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
 
-        public IHttpActionResult Delete([FromODataUri] int key)
-        {
-            var currentproduct = _ctx.Products.FirstOrDefault(p => p.ProductId == key);
-            if (currentproduct == null)
-                return NotFound();
+        //[HttpGet]
+        //[ODataRoute("Products({key})/Description/$value")]
+        //[ODataRoute("Products({key})/Sku/$value")]
+        //[ODataRoute("Products({key})/Hand/$value")]
+        //[ODataRoute("Products({key})/Gender/$value")]
+        //public IHttpActionResult GetPersonPropertyRawValue([FromODataUri] int key)
+        //{
+        //    var product = _ctx.Products.FirstOrDefault(p => p.ProductId == key);
 
-            _ctx.Products.Remove(currentproduct);
-            _ctx.SaveChanges();
+        //    if (product == null)
+        //        return NotFound();
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        //    var propertyToGet = Request.RequestUri.Segments[Request.RequestUri.Segments.Length - 2].TrimEnd('/');
+
+        //    if (!product.HasProperty(propertyToGet))
+        //        return NotFound();
+
+        //    var propertyValue = product.GetValue(propertyToGet);
+
+        //    if (propertyValue == null)
+        //        return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+
+        //    return this.CreateOKHttpActionResult(propertyValue.ToString());
+        //}
+
+        //public IHttpActionResult Post(Model.Product product)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    _ctx.Products.Add(product);
+        //    _ctx.SaveChanges();
+
+        //    return Created(product);
+        //}
+
+        //public IHttpActionResult Put([FromODataUri] int key, Model.Product product)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    var currentproduct = _ctx.Products.FirstOrDefault(p => p.ProductId == key);
+        //    if (currentproduct == null)
+        //        return NotFound();
+
+        //    product.ProductId = currentproduct.ProductId;
+
+
+        //    _ctx.Entry(currentproduct).CurrentValues.SetValues(product);
+
+        //    _ctx.SaveChanges();
+
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
+
+        //public IHttpActionResult Patch([FromODataUri] int key, Delta<Model.Product> patch)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest(ModelState);
+
+
+        //    var currentproduct = _ctx.Products.FirstOrDefault(p => p.ProductId == key);
+        //    if (currentproduct == null)
+        //        return NotFound();
+
+        //    patch.Patch(currentproduct);
+        //    _ctx.SaveChanges();
+
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
+
+        //public IHttpActionResult Delete([FromODataUri] int key)
+        //{
+        //    var currentproduct = _ctx.Products.FirstOrDefault(p => p.ProductId == key);
+        //    if (currentproduct == null)
+        //        return NotFound();
+
+        //    _ctx.Products.Remove(currentproduct);
+        //    _ctx.SaveChanges();
+
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
 
         protected override void Dispose(bool disposing)
         {
