@@ -6,6 +6,146 @@
 	},
 	"item": [
 		{
+			"name": "Get Catalogs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Catalogs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Catalogs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Catalogs (Order By CatalogId)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Catalogs?$orderby=CatalogId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Catalogs"
+					],
+					"query": [
+						{
+							"key": "$orderby",
+							"value": "CatalogId"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Catalogs (Order By CatalogId and get Top 1)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Catalogs?$orderby=CatalogId asc&$top=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Catalogs"
+					],
+					"query": [
+						{
+							"key": "$orderby",
+							"value": "CatalogId asc"
+						},
+						{
+							"key": "$top",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Catalogs (expand Categories)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Catalogs?$expand=Categories($expand=Families($expand=Products;$orderby=FamilyId))",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Catalogs"
+					],
+					"query": [
+						{
+							"key": "$expand",
+							"value": "Categories($expand=Families($expand=Products;$orderby=FamilyId))"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Catalog",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\t\t\"@odata.type\":\"Golf.Product.Model.Catalog\",\n            \"Description\": \"New Catalog Again\"\n        }"
+				},
+				"url": {
+					"raw": "http://localhost:61877/odata/Catalogs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Catalogs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get Categories",
 			"request": {
 				"method": "GET",
@@ -33,7 +173,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:61877/odata/Categories(2)/Description",
+					"raw": "http://localhost:61877/odata/Categories?$select=Description",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -41,8 +181,13 @@
 					"port": "61877",
 					"path": [
 						"odata",
-						"Categories(2)",
-						"Description"
+						"Categories"
+					],
+					"query": [
+						{
+							"key": "$select",
+							"value": "Description"
+						}
 					]
 				}
 			},
@@ -66,6 +211,109 @@
 						"Categories(2)",
 						"Description",
 						"$value"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Categories (with paging, top and count)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Categories?$count=true&$top=2&$skip=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Categories"
+					],
+					"query": [
+						{
+							"key": "$count",
+							"value": "true"
+						},
+						{
+							"key": "$top",
+							"value": "2"
+						},
+						{
+							"key": "$skip",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Categories (expand to Products and Filter)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Categories?$expand=Families($expand=Products($filter=ProductId lt 3))",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Categories"
+					],
+					"query": [
+						{
+							"key": "$expand",
+							"value": "Families($expand=Products($filter=ProductId lt 3))"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Categories (expand to Families Lambda)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Categories?$filter=Families/any(f:f/FamilyId gt 4)&$expand=Families",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Categories"
+					],
+					"query": [
+						{
+							"key": "$filter",
+							"value": "Families/any(f:f/FamilyId gt 4)"
+						},
+						{
+							"key": "$expand",
+							"value": "Families"
+						}
 					]
 				}
 			},
@@ -182,7 +430,7 @@
 					"raw": "{    \r\n    \"Description\": \"New Category\"\r\n}"
 				},
 				"url": {
-					"raw": "http://localhost:61877/odata/Categories(3)",
+					"raw": "http://localhost:61877/odata/Categories(1)",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -190,7 +438,7 @@
 					"port": "61877",
 					"path": [
 						"odata",
-						"Categories(3)"
+						"Categories(1)"
 					]
 				}
 			},
@@ -215,7 +463,7 @@
 					"raw": "{    \r\n    \"Description\": \"Patch Category\"\r\n}"
 				},
 				"url": {
-					"raw": "http://localhost:61877/odata/Categories(3)",
+					"raw": "http://localhost:61877/odata/Categories(1)",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -223,7 +471,7 @@
 					"port": "61877",
 					"path": [
 						"odata",
-						"Categories(3)"
+						"Categories(1)"
 					]
 				}
 			},
@@ -265,7 +513,7 @@
 			"response": []
 		},
 		{
-			"name": "Put Category Association",
+			"name": "Put Category Association**",
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -300,7 +548,7 @@
 			"response": []
 		},
 		{
-			"name": "Delete Category Association",
+			"name": "Delete Category Association**",
 			"request": {
 				"method": "DELETE",
 				"header": [
@@ -318,7 +566,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:61877/odata/Categories(2)/Families/$ref?$id=http://localhost:61877/odata/Families(5)",
+					"raw": "http://localhost:61877/odata/Categories(2)/Families/$ref?$id=http://localhost:61877/odata/Families(1)",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -333,7 +581,34 @@
 					"query": [
 						{
 							"key": "$id",
-							"value": "http://localhost:61877/odata/Families(5)"
+							"value": "http://localhost:61877/odata/Families(1)"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Category (select Description)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Categories(2)?$select=Description",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Categories(2)"
+					],
+					"query": [
+						{
+							"key": "$select",
+							"value": "Description"
 						}
 					]
 				}
@@ -581,6 +856,209 @@
 					"path": [
 						"odata",
 						"Products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Products (filter by Gender)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Products?$filter=Gender eq 'Male'",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Products"
+					],
+					"query": [
+						{
+							"key": "$filter",
+							"value": "Gender eq 'Male'"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Products (filter by Sku)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Products?$filter=Sku eq 'Rogue8IronMR'",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Products"
+					],
+					"query": [
+						{
+							"key": "$filter",
+							"value": "Sku eq 'Rogue8IronMR'"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Products (filter by ProductId)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Products?$filter=ProductId gt 7 and Gender eq 'Female'",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Products"
+					],
+					"query": [
+						{
+							"key": "$filter",
+							"value": "ProductId gt 7 and Gender eq 'Female'"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Products (filter by Sku with operators length and endswith)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:61877/odata/Products?$filter=length(Sku) gt 10 and endswith(Sku,'WR')",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Products"
+					],
+					"query": [
+						{
+							"key": "$filter",
+							"value": "length(Sku) gt 10 and endswith(Sku,'WR')"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Products (custom function returning collection)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\t\t\"@odata.type\":\"Golf.Product.Model.Family\",\n            \"Description\": \"New Family\"\n        }"
+				},
+				"url": {
+					"raw": "http://localhost:61877/odata/Products/Golf.Product.Functions.GetSets",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Products",
+						"Golf.Product.Functions.GetSets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Products (custom action)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:61877/odata/Products/Golf.Product.Actions.SetAllProductsAsRightHanded",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"Products",
+						"Golf.Product.Actions.SetAllProductsAsRightHanded"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get US Catalog (Singleton)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:61877/odata/US Catalog?$expand=Categories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "61877",
+					"path": [
+						"odata",
+						"US Catalog"
+					],
+					"query": [
+						{
+							"key": "$expand",
+							"value": "Categories"
+						}
 					]
 				}
 			},
